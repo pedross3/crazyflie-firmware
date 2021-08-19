@@ -21,21 +21,33 @@ int main()
     while(true)
     {
     // Blink blue LED indicating inicialization (5 seconds)
-    for (h = 0; h < 5; h++) 
-    {ledb = !ledb; wait(1.0);}
+    for (h = 0; h < 3; h++) 
+    {ledb = !ledb; wait(0.2);}
     // Blink LED every second
-    for (h = 0; h < 5; h++) 
-    {ledb = !ledb; ledr = !ledr; wait(1.0/2);}
+    for (h = 0; h < 3; h++) 
+    {ledb = !ledb; ledr = !ledr; wait(0.2);}
 
     // Turn on red LEDs indicating motors are armed
     ledr = 1;
     // Test all motors with different frequencies (to make different noises)
         // Turn motor on (20% power) and off every second
 
-        motor1 = 0.2; wait(0.5);
-        motor2 = 0.5; wait(0.5);
-        motor3 = 0.7; wait(0.5);
-        motor4 = 1.0; wait(0.5);
+        motor1.period(1.0/1000.0); motor1 = 0.2;
+        wait(0.5);
+        motor1 = 0;
+
+        motor2.period(1.0/800); motor2 = 0.2;
+        wait(0.5);
+        motor2 = 0;
+        
+        motor3.period(1.0/600); motor3 = 0.2;
+        wait(0.5);
+        motor3 = 0;
+
+
+        motor4.period(1.0/400); motor4 = 0.2;
+        wait(0.5);
+        motor4 = 0;
         
         motor1 = 0; wait(0.5);
         motor2 = 0; wait(0.5);
@@ -45,8 +57,8 @@ int main()
     // Turn off red LEDs indicating motors are disarmed
     ledr = 0;
     // Blink green LEDs indicating end of program
-    for (h = 0; h < 5; h++) 
-    {ledb = !ledb; wait(1.0);}
+    for (h = 0; h < 3; h++) 
+    {ledb = !ledb; wait(0.2);}
 
 }
 
