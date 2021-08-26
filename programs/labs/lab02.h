@@ -10,12 +10,16 @@ PwmOut motor1(MOTOR3);
 
 int main()
 {
+    motor1.period(1.0/500.0);
     while(true)
     {
-        wait(5);
-        motor1.period(1.0/500.0);
-        motor1 = 0.2;
-        wait(5);
-        motor1 = 0;
+        // wait(5);
+        // 
+        // motor1 = 1;
+        // wait(5);
+        // motor1 = 0;
+
+        // Parte 2:
+        
     }
 }
