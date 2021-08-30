@@ -7,7 +7,7 @@ PwmOut motor (MOTOR3);
 // Converts desired angular velocity (rad/s) to PWM signal (%)
 float control_motor (float omega_r)
 {
-    int PWM;
+    float PWM;
     PWM = (omega_r*omega_r)*2.118e-11 - omega_r*2.543e-06 + 0.1482;
     return PWM;
 }
@@ -24,9 +24,9 @@ int main ()
     {
          // Turn on motor 1 with 1.000 rad/s for 0.5 s
         motor = control_motor(1000.0);
-        wait (0.5);
+        wait (5);
         // Turn off motor 1
         motor = 0.0;
-        wait(0.5);
+        wait(5);
     }
 }
