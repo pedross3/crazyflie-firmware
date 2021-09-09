@@ -70,7 +70,7 @@ int main ()
 
     //Actuate motor with 70% mg total thrust force (N) and zero torques (N.m)
     wait(5);
-    actuate(.7*m*g,0,0,0);
+    actuate(0, 0, 0, 0.001);
     wait(5);
 
     // Turn off all motors
