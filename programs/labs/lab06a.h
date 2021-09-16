@@ -13,6 +13,7 @@ int main ()
     // Turn off all motors
     mixer.actuate(0, 0, 0, 0);
     // End of program
+    wait(5);
     while(true)
     {
         mixer.actuate(0.2, 0, 0, 0);
