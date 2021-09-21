@@ -21,11 +21,11 @@ int main()
     // while(true)
     // {
     // Blink blue LED indicating inicialization (5 seconds)
-    // for (h = 0; h < 3; h++) 
-    // {ledb = !ledb; wait(0.2);}
-    // // Blink LED every second
-    // for (h = 0; h < 3; h++) 
-    // {ledb = !ledb; ledr = !ledr; wait(0.2);}
+    for (h = 0; h < 3; h++) 
+    {ledb = !ledb; wait(0.2);}
+    // Blink LED every second
+    for (h = 0; h < 3; h++) 
+    {ledb = !ledb; ledr = !ledr; wait(0.2);}
 
     // Turn on red LEDs indicating motors are armed
     // ledr = 1;

@@ -25,6 +25,10 @@ class Mixer
 
         // Convert desired angular velocity (rad/s) to PWM signal (%)
         float control_motor (float omega_r);
+        
+        void Play(float PERIODO, float TEMPO); // Função que toca música
+
+        int Toca_Agora = 1;
 };
 
 # endif
