@@ -17,4 +17,10 @@ const float l = 33.0e-3;    // m
 const float Motor_kl = 1.791e-8;  //    
 const float Motor_kd = 1.436e-10; //
 
+// Mete um tempo aí
+const float dt = 2e-3;
+// float wc = 10;
+// // wc = 100;
+// float alpha = 1 - wc*dt/(1+wc*dt);
+    
 #endif
