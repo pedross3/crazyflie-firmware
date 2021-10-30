@@ -21,6 +21,8 @@ AttitudeEstimator::AttitudeEstimator():imu(IMU_SDA, IMU_SCL)
         wait(dt);
     }
     p_bias = p_bias/500;
+    q_bias = q_bias/500;
+    r_bias = r_bias/500;
 
     // Inicialização com LED vermelho
     DigitalOut ledr(LED_RED_R, !false);
@@ -32,21 +34,25 @@ AttitudeEstimator::AttitudeEstimator():imu(IMU_SDA, IMU_SCL)
  // Estimate Euler angles (rad ) and angular velocities ( rad /s)
  void AttitudeEstimator::estimate ()
 {
-    float wc_roll = .1;
-    float alpha = 1 - wc_roll*dt/(1+wc_roll*dt);
+    float wc_roll = 1;
+    float alpha_roll = 1 - wc_roll*dt/(1+wc_roll*dt);
+    
     imu.read();
-    // p = imu.gx - p_bias;
+    p = imu.gx - p_bias;
     q = imu.gy - q_bias;
     r = imu.gz - r_bias;
 
-    // float phi_g = phi + p*dt;
-    // float phi_a = atan2(-imu.ay,-imu.az);
-    // phi = phi_g*alpha + phi_a*(1-alpha);
+    float phi_g = phi + p*dt;
+    float phi_a = atan2(-imu.ay,-imu.az);
+    phi = phi_g*(alpha_roll) + phi_a*(1-alpha_roll);
     
-    float wc_pitch = 1;
+    float wc_pitch = 5;
+    float alpha_pitch = 1 - wc_pitch*dt/(1+wc_pitch*dt);
+
     float theta_g = theta + q*dt;
     float theta_a = atan2(imu.ax,-imu.az);
-    theta = theta_g*alpha + theta_a*(1-alpha);
+
+    theta = theta_g*(alpha_pitch) + theta_a*(1-alpha_pitch);
 
     float psi_g = psi;
 }
