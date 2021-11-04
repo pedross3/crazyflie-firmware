@@ -12,6 +12,8 @@ class Mixer
         Mixer () ;
         // Actuate motors with desired total trust force (N) and torques (N.m)
         void actuate(float f_t, float tau_phi, float tau_theta, float tau_psi);
+        void disarm();
+        void arm();
 
     private :
         // Motors PWM outputs
@@ -29,6 +31,8 @@ class Mixer
         void Play(float PERIODO, float TEMPO); // Função que toca música
 
         int Toca_Agora = 1;
+
+        bool armed;
 };
 
 # endif

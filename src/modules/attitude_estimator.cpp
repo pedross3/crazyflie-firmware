@@ -54,6 +54,6 @@ AttitudeEstimator::AttitudeEstimator():imu(IMU_SDA, IMU_SCL)
 
     theta = theta_g*(alpha_pitch) + theta_a*(1-alpha_pitch);
 
-    float psi_g = psi;
+    float psi_g = psi + r*dt;
+    psi = psi_g;
 }
-

@@ -9,24 +9,21 @@ int h; // Variável de iteração do loop
 Mixer :: Mixer () : motor_1(MOTOR1), motor_2(MOTOR2), motor_3(MOTOR3), motor_4(MOTOR4)
 {
     // Inicia todos os motores com 500 Hz e 0 de PWM.
+
+    // Musiquinha do windows
+    Play(1661, 250);
+    Play(1244, 250);
+    Play(830, 250);
+    Play(932, 250);
+    motor_1 = 0.0;
+    motor_2 = 0.0;
+    motor_3 = 0.0;
+    motor_4 = 0.0;    
     motor_1.period(1.0/500.0);
     motor_2.period(1.0/500.0);
     motor_3.period(1.0/500.0);
     motor_4.period(1.0/500.0);
-    motor_1 = 0.0;
-    motor_2 = 0.0;
-    motor_3 = 0.0;
-    motor_4 = 0.0;
-}
-
-// Actuate motors with desired total trust force (N) and torques (N.m)
-void Mixer :: actuate (float f_t, float tau_phi, float tau_theta, float tau_psi)
-{
-    // Utilizamos a função criada para uma entrada de força, convertendo para omega, e saída de PWM.
-    mixer(f_t, tau_phi, tau_theta, tau_psi);
-    wait(2); 
-    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
+    
     // I   N  I  C  I  A  L  I  Z  A  Ç  Ã  O 
 
     // Show de luzes
@@ -34,21 +31,33 @@ void Mixer :: actuate (float f_t, float tau_phi, float tau_theta, float tau_psi)
     {
         ledb = !ledb;
         ledr = !ledr; 
-        wait(0.2);
-        }
-    // Musiquinha do windows
-    Play(1661, 250);
-    Play(1244, 250);
-    Play(830, 250);
-    Play(932, 250);
+        wait(0.5);
+    }
 
     // Fim das maracutaia;
+}
 
-    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// Actuate motors with desired total trust force (N) and torques (N.m)
+void Mixer :: actuate (float f_t, float tau_phi, float tau_theta, float tau_psi)
+{
+    // arm();
+    if (armed == 1)
+    {
+    // Utilizamos a função criada para uma entrada de força, convertendo para omega, e saída de PWM.
+    mixer(f_t, tau_phi, tau_theta, tau_psi);
+    
+    wait(2);
+  
     motor_1 = control_motor(omega_1);
     motor_2 = control_motor(omega_2);
     motor_3 = control_motor(omega_3);
     motor_4 = control_motor(omega_4);
+    
+    }
+    if (armed == 0)
+    {
+        disarm();
+    }
 }
 
 // Convert total trust force (N) and torques (N.m) to angular velocities ( rad /s)
@@ -121,4 +130,18 @@ void Mixer::Play(float PERIODO, float TEMPO)
         wait_ms(TEMPO);
         Toca_Agora = 1;
     }
+}
+
+void Mixer::disarm()
+{
+    motor_1 = 0.0;
+    motor_2 = 0.0;
+    motor_3 = 0.0;
+    motor_4 = 0.0;
+    armed = 0;
+}
+
+void Mixer::arm()
+{
+    armed = 1;
 }

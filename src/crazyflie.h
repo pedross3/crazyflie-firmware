@@ -22,5 +22,6 @@
 // Includes de usuário
 #include "mixer.h"
 #include "attitude_estimator.h"
+#include "attitude_controller.h"
 
 #endif
