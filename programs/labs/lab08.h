@@ -37,11 +37,11 @@ int main ()
             {
             flag = false;
             att_est.estimate();
-            att_cont.control(phi_r, theta_r, psi_r, att_est.phi, att_est.theta, att_est.
-                psi, att_est.p, att_est.q, att_est.r);
-            mixer.actuate(f_t, 0.0, att_cont.tau_theta, 0.0);
+            att_cont.control(phi_r, theta_r, psi_r, att_est.phi, att_est.theta, att_est.psi, att_est.p, att_est.q, att_est.r);
+            mixer.actuate(f_t, att_cont.tau_phi, att_cont.tau_theta, 0.0);
             }
         }
+        
     // Disarm motors and end program
     mixer.disarm();
     while (true);

@@ -33,8 +33,6 @@ Mixer :: Mixer () : motor_1(MOTOR1), motor_2(MOTOR2), motor_3(MOTOR3), motor_4(M
         ledr = !ledr; 
         wait(0.5);
     }
-
-    // Fim das maracutaia;
 }
 
 // Actuate motors with desired total trust force (N) and torques (N.m)
@@ -45,9 +43,9 @@ void Mixer :: actuate (float f_t, float tau_phi, float tau_theta, float tau_psi)
     {
     // Utilizamos a função criada para uma entrada de força, convertendo para omega, e saída de PWM.
     mixer(f_t, tau_phi, tau_theta, tau_psi);
-    
-    wait(2);
-  
+
+    // wait(2);
+
     motor_1 = control_motor(omega_1);
     motor_2 = control_motor(omega_2);
     motor_3 = control_motor(omega_3);
