@@ -17,7 +17,7 @@ const float l = 33.0e-3;    // m
 const float Motor_kl = 1.791e-8;  //    
 const float Motor_kd = 1.436e-10; //
 
-// Lab 07 parameters
+// Attitude Estimator - Lab 07 parameters
 const float dt = 2e-3; // 500 Hz
 
 const float wc_roll = 1;
@@ -26,7 +26,7 @@ const float alpha_roll = 1 - wc_roll*dt/(1+wc_roll*dt);
 const float wc_pitch = 5;
 const float alpha_pitch = 1 - wc_pitch*dt/(1+wc_pitch*dt);
 
-// Lab 08 parameters
+// Attitude controller - Lab 08
 const float Ts = 0.4;
 const float os = 0.5/100;
 
@@ -45,11 +45,22 @@ const float omega_n_yaw = 4.0/(zeta_yaw*Ts_yaw);
 const float kd_y = 2.0*zeta_yaw*omega_n_yaw; // kd e kp para yaw
 const float kp_y = pow(omega_n_yaw,2);
 
-// Verticl Estimator
-const float estimator_vertical_dt = 2.5e-2;
-const float estimator_vertical_wc = 10;
-const float estimator_vertical_zeta = sqrt(2)/2;
+// Vertical Estimator - Lab 09
 
-const float EV_l1 = pow(estimator_vertical_wc, 2);
-const float EV_l2 = 2*estimator_vertical_zeta*estimator_vertical_wc;
+const float dt_range = 1.0/20;
+const float vertical_estimator_wc = 10;
+const float vertical_estimator_zeta = sqrt(2)/2;
+
+const float l1 = pow(vertical_estimator_wc, 2);
+const float l2 = 2*vertical_estimator_zeta*vertical_estimator_wc;
+
+// Vertical Controller - Lab 10
+const float Ts_vertical = 0.4;
+const float os_vertical = 0.5/100;
+
+const float zeta_vertical = abs(log(os_vertical))/(sqrt(pow(log(os_vertical),2)+pow(pi,2)));
+const float omega_n_vertical = 4/(zeta_vertical*Ts);
+
+const float kd_vertical = 2*zeta_vertical*omega_n_vertical; //kd e kp para roll e pitch
+const float kp_vertical = pow(omega_n_vertical,2);
 #endif

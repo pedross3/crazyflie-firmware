@@ -7,7 +7,6 @@ AttitudeController :: AttitudeController ()
     tau_phi = 0;
     tau_psi = 0;
     tau_theta = 0;
-    is_first = 0;
 }
 
 // Control torques (N.m) given reference angles ( rad) and current angles ( rad ) and angular velocities ( rad /s)

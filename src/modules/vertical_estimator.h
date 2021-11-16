@@ -9,7 +9,7 @@ class VerticalEstimator
 {
     public :
         // Class constructor
-        VerticalEstimator() ;
+        VerticalEstimator();
         // Initialize class
         void init();
         // Predict vertical position and velocity from model
@@ -20,9 +20,9 @@ class VerticalEstimator
         float z, w;
     private :
         // Range sensor object
-        VL53L0X range ;
+        // VL53L0X range ;
         float zm;
-        // VL53L1X range ;
+        VL53L1X range;
 };
 
 #endif

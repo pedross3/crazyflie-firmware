@@ -14,7 +14,6 @@ class AttitudeController
         void control (float phi_r, float theta_r, float psi_r, float phi, float theta, float psi, float p, float q, float r);
         // Torques (Nm)
         float tau_phi, tau_theta, tau_psi;
-        bool is_first;
     private :
     // Control torque (Nm) given reference angle (rad) and current angle (rad) and angular velocity (rad/s) with given controller gains
     float control_siso (float angle_r, float angle, float rate, float kp, float kd);
