@@ -25,5 +25,6 @@
 #include "attitude_controller.h"
 #include "vertical_estimator.h"
 #include "vertical_controller.h"
+#include "horizontal_estimator.h"
 
 #endif

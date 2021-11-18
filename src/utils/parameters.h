@@ -55,8 +55,8 @@ const float l1 = pow(vertical_estimator_wc, 2);
 const float l2 = 2*vertical_estimator_zeta*vertical_estimator_wc;
 
 // Vertical Controller - Lab 10
-const float Ts_vertical = 0.4;
-const float os_vertical = 0.5/100;
+const float Ts_vertical = 0.6;
+const float os_vertical = 0.8/100;
 
 const float zeta_vertical = abs(log(os_vertical))/(sqrt(pow(log(os_vertical),2)+pow(pi,2)));
 const float omega_n_vertical = 4/(zeta_vertical*Ts);
