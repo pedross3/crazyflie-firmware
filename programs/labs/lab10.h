@@ -23,11 +23,10 @@ int main ()
 {
     // Set references
     float z_r = 0;
-    float i;
-    for (i=0; i <= 0.8; i++)
+    while(z_r <= 1.0)
     {
-        z_r = z_r + 0.1;
-        wait(0.5);
+        z_r = z_r + dt;
+        wait(dt);
     }
 
     float phi_r = 0.0;
