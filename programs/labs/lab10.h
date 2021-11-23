@@ -22,13 +22,7 @@ void callback_range(){flag_range = true;}
 int main ()
 {
     // Set references
-    float z_r = 0;
-    while(z_r <= 1.0)
-    {
-        z_r = z_r + dt;
-        wait(dt);
-    }
-
+    float z_r = 0.8;
     float phi_r = 0.0;
     float theta_r = 0.0;
     float psi_r = 0.0;

@@ -63,4 +63,10 @@ const float omega_n_vertical = 4/(zeta_vertical*Ts);
 
 const float kd_vertical = 2*zeta_vertical*omega_n_vertical; //kd e kp para roll e pitch
 const float kp_vertical = pow(omega_n_vertical,2);
+
+// Horizontal Estimator - Lab 11
+const double gamma = 42*pi/180; // rad --> ângulo de visão
+const double W = 420; // pixels --> resolução do sensor
+const float sigma = (2.0*tan(gamma/2))/(W*dt);
+const float l_hor = 50.0;
 #endif
