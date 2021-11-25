@@ -20,7 +20,7 @@ void AttitudeController :: control(float phi_r, float theta_r, float psi_r, floa
 
     tau_phi = I_xx*acc_phi_r;
     tau_theta = I_yy*acc_theta_r;
-    tau_psi = I_zz*acc_phi_r;
+    tau_psi = I_zz*acc_psi_r;
 
 }
 

@@ -34,26 +34,23 @@ AttitudeEstimator::AttitudeEstimator():imu(IMU_SDA, IMU_SCL)
  // Estimate Euler angles (rad ) and angular velocities ( rad /s)
  void AttitudeEstimator::estimate ()
 {
-    float wc_roll = 1;
-    float alpha_roll = 1 - wc_roll*dt/(1+wc_roll*dt);
     
     imu.read();
     p = imu.gx - p_bias;
     q = imu.gy - q_bias;
     r = imu.gz - r_bias;
 
+    // Pitch
     float phi_g = phi + p*dt;
     float phi_a = atan2(-imu.ay,-imu.az);
-    phi = phi_g*(alpha_roll) + phi_a*(1-alpha_roll);
+    phi = phi_g*(1-alpha) + phi_a*(alpha);
     
-    float wc_pitch = 5;
-    float alpha_pitch = 1 - wc_pitch*dt/(1+wc_pitch*dt);
-
+    // Roll
     float theta_g = theta + q*dt;
     float theta_a = atan2(imu.ax,-imu.az);
+    theta = theta_g*(1-alpha) + theta_a*(alpha);
 
-    theta = theta_g*(alpha_pitch) + theta_a*(1-alpha_pitch);
-
+    // Yaw
     float psi_g = psi + r*dt;
     psi = psi_g;
 }
