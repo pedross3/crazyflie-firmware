@@ -97,7 +97,7 @@ int main()
                 flight_time.stop();
             }
 
-            ver_cont.control(z_r, ver_est.z, ver_est.w);
+            // ver_cont.control(z_r, ver_est.z, ver_est.w);
             att_cont.control(hor_cont.phi_r, hor_cont.theta_r, psi_r, att_est .phi, att_est.theta, att_est.psi, att_est.p, att_est.q, att_est.r);
 
             mixer.actuate(ver_cont.f_t/(cos(att_est.phi)*cos(att_est.theta)),att_cont.tau_phi, att_cont.tau_theta, att_cont.tau_psi);
