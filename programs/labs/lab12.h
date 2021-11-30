@@ -24,16 +24,13 @@ void callback_range() { flag_range = true ;}
 int main()
 {
     // Set references
-    float z_r = 1.5;
+    float z_r = 1.0;
     float x_r = 0.0;
     float y_r = 0.0;
     float psi_r = 0.0;
     float z_ramp = 0.0; // Z reference as a ramp
     float flight = 60.0; // Time of flight
     
-
-
-    // Comenta aqui
     // Initialize estimators objects
     att_est.init();
     ver_est.init();
@@ -63,7 +60,7 @@ int main()
 
             hor_est.predict(att_est.phi, att_est.theta);
 
-            if(ver_est.z>=0.05)
+            if(ver_est.z >= 0.05)
             {
                 hor_est.correct(att_est.phi, att_est.theta, att_est.p, att_est.q, ver_est.z);
                 hor_cont.control(x_r, y_r, hor_est.x, hor_est.y, hor_est.u, hor_est.v);
@@ -74,7 +71,7 @@ int main()
             // Climbing 
             if (flight_time.read() < flight && z_ramp < z_r) // Checks time and vertical position
             {
-                z_ramp = z_ramp + 0.01;
+                z_ramp += 0.01;
                 ver_cont.control(z_ramp, ver_est.z, ver_est.w);
             }
 
@@ -83,13 +80,6 @@ int main()
             {
                 ver_cont.control(z_r, ver_est.z, ver_est.w);
             }
-
-            // // Falling
-            // if (flight_time.read() > flight && z_ramp > 0.01) // Checks time and vertical position
-            // {
-            //     z_ramp = z_ramp - 0.01;
-            //     ver_cont.control(z_ramp, ver_est.z, ver_est.w);
-            // }
 
             // Safety conditional for disarming motors
             if (ver_est.z < 0.01 && flight_time.read() > flight) // Checks time and vertical position
