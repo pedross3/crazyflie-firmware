@@ -24,7 +24,7 @@ void callback_range() { flag_range = true ;}
 int main()
 {
     // Set references
-    float z_r = 1.0;
+    float z_r = 1.5;
     float x_r = 0.0;
     float y_r = 0.0;
     float psi_r = 0.0;
@@ -35,7 +35,7 @@ int main()
     att_est.init();
     ver_est.init();
     hor_est.init();
-
+    
     // Initialize interrupts
     tic.attach(& callback, dt);
     tic_range.attach(& callback_range, dt_range );
@@ -81,12 +81,12 @@ int main()
                 ver_cont.control(z_r, ver_est.z, ver_est.w);
             }
 
-            // Falling
-            if (flight_time.read() > flight && z_ramp > 0.01) // Checks time and vertical position
-            {
-                z_ramp = z_ramp - 0.01;
-                ver_cont.control(z_ramp, ver_est.z, ver_est.w);
-            }
+            // // Falling
+            // if (flight_time.read() > flight && z_ramp > 0.01) // Checks time and vertical position
+            // {
+            //     z_ramp = z_ramp - 0.01;
+            //     ver_cont.control(z_ramp, ver_est.z, ver_est.w);
+            // }
 
             // Safety conditional for disarming motors
             if (ver_est.z < 0.01 && flight_time.read() > flight) // Checks time and vertical position
