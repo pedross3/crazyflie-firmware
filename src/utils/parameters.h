@@ -65,4 +65,14 @@ const double gamma = 42*pi/180; // rad --> ângulo de visão
 const double W = 420; // pixels --> resolução do sensor
 const float sigma = (2.0*tan(gamma/2))/(W*dt);
 const float l_hor = 50.0;
+
+// Horizontal Controller - Lab 12
+const float Ts_horizontal = 0.5;
+const float os_horizontal = 0.3/100.0;
+
+const float zeta_horizontal = abs(log(os_vertical))/(sqrt(pow(log(os_vertical),2)+pow(pi,2)));
+const float omega_n_horizontal = 4/(zeta_vertical*Ts_vertical);
+
+const float kd_horizontal = 2*zeta_vertical*omega_n_vertical; //kd e kp para roll e pitch
+const float kp_horizontal = pow(omega_n_vertical,2);
 #endif

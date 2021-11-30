@@ -16,7 +16,8 @@ class HorizontalController
         float phi_r, theta_r;
 
     private :
-        // Control acceleration given reference position (m) and current position (m)and velocity (m/s) with given controller gains
+        // Control acceleration given reference position (m) and current position (m)
+        // and velocity (m/s) with given controller gains
         float control_siso(float position_r, float position, float velocity, float kp, float kd);
 };
 

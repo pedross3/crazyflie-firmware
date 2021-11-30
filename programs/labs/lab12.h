@@ -24,20 +24,27 @@ void callback_range() { flag_range = true ;}
 int main()
 {
     // Set references
-    float z_r = 0.5;
+    float z_r = 0.8;
     float x_r = 0.0;
     float y_r = 0.0;
     float psi_r = 0.0;
+    float z_ramp = 0.0;
+    float flight = 60.0; // Time of flight
+    
     // Initialize estimators objects
     att_est.init();
     ver_est.init();
     hor_est.init();
+
     // Initialize interrupts
     tic.attach(& callback, dt);
     tic_range.attach(& callback_range, dt_range );
+    Timer flight_time;
+    
     // Arm motors and run controller while stable
     mixer.arm();
-    while(abs(att_est.phi)<=pi/4.0 && abs(att_est.theta)<=pi/4.0 && abs(att_est.p)<=4.0*pi && abs(att_est.q)<=4.0*pi && abs(att_est.r<=4.0*pi))
+    while(abs(att_est.phi)<=pi/4.0 && abs(att_est.theta)<=pi/4.0 && 
+    abs(att_est.p)<=4.0*pi && abs(att_est.q)<=4.0*pi && abs(att_est.r<=4.0*pi))
     {
         if(flag)
         {
@@ -55,6 +62,32 @@ int main()
                 hor_est.correct(att_est.phi, att_est.theta, att_est.p, att_est.q, ver_est.z);
                 hor_cont.control(x_r, y_r, hor_est.x, hor_est.y, hor_est.u, hor_est.v);
             }
+            
+            if (flight_time.read() < flight && z_ramp < z_r) 
+            {
+                z_ramp = z_ramp + 0.001;
+                ver_cont.control(z_ramp, ver_est.z, ver_est.w);
+            }
+
+            
+            if (flight_time.read() < flight && z_ramp >= z_r) {
+                ver_cont.control(z_r, ver_est.z, ver_est.w);
+            }
+
+            if (flight_time.read() > flight && z_ramp > 0.01) {
+
+                z_ramp = z_ramp - 0.001;
+                ver_cont.control(z_ramp, ver_est.z, ver_est.w);
+            }
+
+            if (ver_est.z < 0.01 && flight_time.read() > flight) {
+
+                // Disarm motors and end program
+                mixer.disarm();
+                flight_time.reset();
+                flight_time.stop();
+            }
+
             ver_cont.control(z_r, ver_est.z, ver_est.w);
             att_cont.control(hor_cont.phi_r, hor_cont.theta_r, psi_r, att_est .phi, att_est.theta, att_est.psi, att_est.p, att_est.q, att_est.r);
 
