@@ -24,11 +24,11 @@ void callback_range() { flag_range = true ;}
 int main()
 {
     // Set references
-    float z_r = 0.8;
+    float z_r = 1.0;
     float x_r = 0.0;
     float y_r = 0.0;
     float psi_r = 0.0;
-    float z_ramp = 0.0;
+    float z_ramp = 0.0; // Z reference as a ramp
     float flight = 60.0; // Time of flight
     
     // Initialize estimators objects
@@ -51,40 +51,49 @@ int main()
             flag = false ;
             att_est.estimate();
             ver_est.predict(ver_cont.f_t);
+
             if(flag_range)
             {
                 flag_range = false;
                 ver_est.correct(att_est.phi, att_est.theta);
             }
+
             hor_est.predict(att_est.phi, att_est.theta);
+
             if(ver_est.z>=0.05)
             {
                 hor_est.correct(att_est.phi, att_est.theta, att_est.p, att_est.q, ver_est.z);
                 hor_cont.control(x_r, y_r, hor_est.x, hor_est.y, hor_est.u, hor_est.v);
             }
             
-            if (flight_time.read() < flight && z_ramp < z_r) 
+            // Creating trapezoid reference
+
+            // Climbing 
+            if (flight_time.read() < flight && z_ramp < z_r) // Checks time and vertical position
             {
-                z_ramp = z_ramp + 0.001;
+                z_ramp = z_ramp + 0.01;
                 ver_cont.control(z_ramp, ver_est.z, ver_est.w);
             }
 
-            
-            if (flight_time.read() < flight && z_ramp >= z_r) {
+            // Steady
+            if (flight_time.read() < flight && z_ramp >= z_r) // Checks time and vertical position
+            {
                 ver_cont.control(z_r, ver_est.z, ver_est.w);
             }
 
-            if (flight_time.read() > flight && z_ramp > 0.01) {
-
-                z_ramp = z_ramp - 0.001;
+            // Falling
+            if (flight_time.read() > flight && z_ramp > 0.01) // Checks time and vertical position
+            {
+                z_ramp = z_ramp - 0.01;
                 ver_cont.control(z_ramp, ver_est.z, ver_est.w);
             }
 
-            if (ver_est.z < 0.01 && flight_time.read() > flight) {
-
+            // Safety conditional for disarming motors
+            if (ver_est.z < 0.01 && flight_time.read() > flight) // Checks time and vertical position
+            {
                 // Disarm motors and end program
                 mixer.disarm();
-                flight_time.reset();
+                flight_time.reset(); // Reset flight count time
                 flight_time.stop();
             }
 
