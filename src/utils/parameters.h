@@ -23,7 +23,7 @@ const float wc = 1.0;
 const float alpha = wc*dt/(1+wc*dt);
 
 // Attitude controller - Lab 08
-const float Ts = 0.3;
+const float Ts = 0.4;
 const float os = 0.5/100.0;
 
 const float zeta = abs(log(os))/(sqrt(pow(log(os),2)+pow(pi,2)));
@@ -33,7 +33,7 @@ const float kd_rp = 2*zeta*omega_n; //kd e kp para roll e pitch
 const float kp_rp = pow(omega_n,2);
 
 const float Ts_yaw = 0.6;
-const float os_yaw = 0.5/100.0;
+const float os_yaw = 5.0/100.0;
 
 const float zeta_yaw = abs(log(os_yaw))/(sqrt(pow(log(os_yaw),2)+pow(pi,2)));
 const float omega_n_yaw = 4.0/(zeta_yaw*Ts_yaw);
@@ -67,8 +67,8 @@ const float sigma = (2.0*tan(gamma/2))/(W*dt);
 const float l_hor = 50.0;
 
 // Horizontal Controller - Lab 12
-const float Ts_horizontal = 0.5;
-const float os_horizontal = 0.3/100.0;
+const float Ts_horizontal = 2.0;
+const float os_horizontal = 3.0/100.0;
 
 const float zeta_horizontal = abs(log(os_vertical))/(sqrt(pow(log(os_vertical),2)+pow(pi,2)));
 const float omega_n_horizontal = 4/(zeta_vertical*Ts_vertical);
